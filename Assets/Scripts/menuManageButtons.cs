@@ -20,7 +20,7 @@ public class menuManageButtons : MonoBehaviour
         
     }
 
-    public void StartWordGame()
+    public void StartGame()
     {
         SceneManager.LoadScene(1); //Main=1
     }
