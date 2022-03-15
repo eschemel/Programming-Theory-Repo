@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EnemyFaller : Enemy
 {
-    Rigidbody2D rigidbody2d;
-    Animator animator;
-
     private float gravity = 0f;
     //float speed = 30f;
     //int direction = 1;
@@ -14,18 +11,15 @@ public class EnemyFaller : Enemy
     int dropSpeed;
     int dropDirection;
 
-    Vector2 originPosition; 
+    Vector2 originPosition;
     Vector2 positionA;
 
-    Vector2 crushPosition; 
+    Vector2 crushPosition;
     Vector2 positionB;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-
         rigidbody2d.gravityScale = gravity;
 
         originPosition = transform.position;
@@ -43,7 +37,7 @@ public class EnemyFaller : Enemy
             StartCoroutine("Blink");
         }
     }
-        
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
@@ -58,10 +52,22 @@ public class EnemyFaller : Enemy
             gravity = 1f;
 
             FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
+            StartCoroutine("ResetEnemy");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    IEnumerator ResetEnemy()
+    {
+        yield return new WaitForSeconds(5);
+        dropSpeed = 15;
+        dropDirection = -1;
+        positionA = originPosition;
+        positionB = crushPosition;
+        gravity = 0f;
+
+        FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
+    }
+    /*private void OnTriggerExit2D(Collider2D other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
@@ -76,7 +82,7 @@ public class EnemyFaller : Enemy
 
             FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
         }
-    }
+    }*/
 
     private void FallerMove(float cGravity, int mSpeed, int mDirection, Vector2 positionA, Vector2 postionB)
     {
@@ -103,6 +109,5 @@ public class EnemyFaller : Enemy
     {
         base.OnCollisionEnter2D(collision);
         //print("Child hit with collider");
-        animator.SetTrigger("hit");
     }
 }

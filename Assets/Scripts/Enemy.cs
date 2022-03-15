@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    protected Animator animator;
+    protected Rigidbody2D rigidbody2d;
 
-    // Start is called before the first frame update
-    void Start()
+    public virtual void Awake()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        animator = GetComponentInChildren<Animator>();
+        rigidbody2d = GetComponentInChildren<Rigidbody2D>();
     }
 
     public virtual void OnCollisionEnter2D(Collision2D collision)
@@ -25,6 +21,10 @@ public class Enemy : MonoBehaviour
         if (player != null)
         {
             player.ChangeHealth(-1);
+            if (animator != null)
+            {
+                animator.SetTrigger("hit");
+            }
         }
     }
 }

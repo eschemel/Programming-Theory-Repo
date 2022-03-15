@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     //Health
     public int maxHealth = 5;
     int currentHealth;
+    public int health { get { return currentHealth; } } //Property, get = read-only to other scripts / set = writable not readable to other scripts
     bool isInvincible;
     float timeInvincible = 2.0f;
     float invincibleTimer;
@@ -229,6 +230,7 @@ public class PlayerController : MonoBehaviour
             invincibleTimer = timeInvincible;
 
             animator.SetTrigger("hit");
+            rigidbody2d.AddForce(Vector2.left * 100, ForceMode2D.Impulse);
             //hitEffectPosition = rigidbody2d.position;
             //Instantiate(hitEffect, hitEffectPosition, Quaternion.identity);
             //PlaySound(hitClip);

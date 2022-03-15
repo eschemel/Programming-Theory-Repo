@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class EnemyPatroller : Enemy
 {
-    Rigidbody2D rigidbody2d;
     SpriteRenderer spriteRenderer;
-    Animator animator;
 
     float speed = 3.0f;
     float changeTime = 4.0f;
@@ -17,9 +15,7 @@ public class EnemyPatroller : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
         timer = changeTime;
     }
 
@@ -66,6 +62,5 @@ public class EnemyPatroller : Enemy
     {
         base.OnCollisionEnter2D(collision);
         //print("Child hit with collider");
-        animator.SetTrigger("hit");
     }
 }
