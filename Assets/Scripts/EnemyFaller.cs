@@ -67,29 +67,9 @@ public class EnemyFaller : Enemy
 
         FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
     }
-    /*private void OnTriggerExit2D(Collider2D other)
-    {
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-
-        if (player != null)
-        {
-            Debug.Log("Child trigger Exit");
-            dropSpeed = 2;
-            dropDirection = 1;
-            positionA = crushPosition;
-            positionB = originPosition;
-            gravity = 0f;
-
-            FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
-        }
-    }*/
-
+    
     private void FallerMove(float cGravity, int mSpeed, int mDirection, Vector2 positionA, Vector2 postionB)
     {
-        //Vector2 position = new Vector2(rigidbody2d.position.x, originPosition.y);
-
-        //position.y = position.y + Time.deltaTime * mSpeed * mDirection;
-
         rigidbody2d.gravityScale = cGravity;
         //Move
         float step = Time.deltaTime * mSpeed * mDirection;
@@ -109,5 +89,10 @@ public class EnemyFaller : Enemy
     {
         base.OnCollisionEnter2D(collision);
         //print("Child hit with collider");
+    }
+
+    public override void EnemyMove()
+    {
+        rigidbody2d.MovePosition(rigidbody2d.position); // override to remain stationary
     }
 }
