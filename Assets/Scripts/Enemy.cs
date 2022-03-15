@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,14 +17,14 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        DealDamage();
-    }
-   
-    public virtual void DealDamage()
-    { // virtual keyword allows overriding
+        // virtual keyword allows overriding
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
-        //Player.Health -= 10;
+        if (player != null)
+        {
+            player.ChangeHealth(-1);
+        }
     }
 }

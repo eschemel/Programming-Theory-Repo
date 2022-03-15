@@ -8,13 +8,17 @@ public class EnemyFaller : Enemy
     Animator animator;
 
     private float gravity = 0f;
-    //float speed = 0.5f;
+    //float speed = 30f;
     //int direction = 1;
     float blinkTimer = 0f;
+    int dropSpeed;
+    int dropDirection;
 
-    Vector2 originPosition; // Position A
+    Vector2 originPosition; 
+    Vector2 positionA;
 
-    Vector2 crushPosition; // Position B
+    Vector2 crushPosition; 
+    Vector2 positionB;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +36,8 @@ public class EnemyFaller : Enemy
     // Update is called once per frame
     void Update()
     {
+        //Blink animation
         blinkTimer += Time.deltaTime;
-
         if (blinkTimer > 5f)
         {
             StartCoroutine("Blink");
@@ -42,82 +46,62 @@ public class EnemyFaller : Enemy
         
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<PlayerController>() != null)
+        PlayerController player = other.gameObject.GetComponent<PlayerController>();
+
+        if (player != null)
         {
             Debug.Log("Child trigger Enter");
-            StartCoroutine("FallerDrop");
-        } else if (rigidbody2d.position != originPosition)
-        {
-            StartCoroutine("FallerMove");
+            dropSpeed = 5;
+            dropDirection = 1;
+            positionA = originPosition;
+            positionB = crushPosition;
+            gravity = 1f;
+
+            FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<PlayerController>() != null)
+        PlayerController player = other.gameObject.GetComponent<PlayerController>();
+
+        if (player != null)
         {
             Debug.Log("Child trigger Exit");
-            StartCoroutine("FallerReset");
-            StartCoroutine("FallerMove");
+            dropSpeed = 2;
+            dropDirection = 1;
+            positionA = crushPosition;
+            positionB = originPosition;
+            gravity = 0f;
+
+            FallerMove(gravity, dropSpeed, dropDirection, positionA, positionB);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void FallerMove(float cGravity, int mSpeed, int mDirection, Vector2 positionA, Vector2 postionB)
     {
-        
+        //Vector2 position = new Vector2(rigidbody2d.position.x, originPosition.y);
+
+        //position.y = position.y + Time.deltaTime * mSpeed * mDirection;
+
+        rigidbody2d.gravityScale = cGravity;
+        //Move
+        float step = Time.deltaTime * mSpeed * mDirection;
+        transform.position = Vector2.MoveTowards(positionA, postionB, step);
     }
 
-    IEnumerator FallerDrop()
-    {
-        yield return new WaitForSeconds(0.25f);
-        gravity = 1f;
-        rigidbody2d.gravityScale = gravity;
-
-        rigidbody2d.AddForce(Vector2.down, ForceMode2D.Impulse);
-
-        if (rigidbody2d.position == crushPosition)
-        {
-            yield break;
-        }
-    }
-
-    IEnumerator FallerReset()
-    {
-        yield return new WaitForSeconds(3);
-        gravity = 0f;
-        rigidbody2d.gravityScale = gravity;
-
-        // If the object has arrived, stop the coroutine
-        if (rigidbody2d.position == originPosition)
-        {
-            yield break;
-        }
-    }
-
-    IEnumerator FallerMove()
-    {
-        float timeSinceStarted = 0f;
-        while (true)
-        {
-            timeSinceStarted += Time.deltaTime / 9.0f;
-            rigidbody2d.position = Vector2.Lerp(rigidbody2d.position, originPosition, timeSinceStarted);
-
-            // If the object has arrived, stop the coroutine
-            if (rigidbody2d.position == originPosition)
-            {
-                yield break;
-            }
-
-            // Otherwise, continue next frame
-            yield return null;
-        }
-    }
-
+    //Blink animation
     IEnumerator Blink()
     {
         animator.SetBool("blink", true);
         blinkTimer = 0;
         yield return new WaitForSeconds(0.8f);
         animator.SetBool("blink", false);
+    }
+
+    public override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        print("Child hit with collider");
     }
 }

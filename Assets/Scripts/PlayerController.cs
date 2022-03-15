@@ -5,35 +5,47 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private Rigidbody2D rigidbody2d;
-    [SerializeField] private Animator animator;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private LayerMask groundLayer;
+    private Rigidbody2D rigidbody2d;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private LayerMask groundLayer;
+    private AudioSource audioSource;
 
     [Header("Horizontal Movement")]
-    [SerializeField] private float speed = 15f;
-    [SerializeField] private Vector2 direction;
+    private float speed = 15f;
+    private Vector2 direction;
     private float horizontalInput;
     private float verticalInput;
     bool facingRight = false;
 
     [Header("Vertical Movement")]
-    [SerializeField] private float jumpForce = 19f;
-    [SerializeField] private float jumpDelay = 0.25f;
-    [SerializeField] private float jumpTimer;
-    [SerializeField] private bool doubleJumpUsed = false;
-    [SerializeField] private float doubleJumpForce = 10;
+    private float jumpForce = 19f;
+    private float jumpDelay = 0.25f;
+    private float jumpTimer;
+    private bool doubleJumpUsed = false;
+    private float doubleJumpForce = 10;
 
     [Header("Physics")]
-    [SerializeField] private float maxSpeed = 15f;
-    [SerializeField] private float linearDrag = 4f;
-    [SerializeField] private float gravity = 1f;
-    [SerializeField] private float fallMultiplier = 5f;
+    private float maxSpeed = 15f;
+    private float linearDrag = 4f;
+    private float gravity = 1f;
+    private float fallMultiplier = 5f;
 
     [Header("Collision")]
-    [SerializeField] private bool isGrounded = true;
-    [SerializeField] private float groundLength = 0.95f;
-    [SerializeField] private Vector3 colliderOffset = new Vector3(0.42f, 0f);
+    private bool isGrounded = true;
+    private float groundLength = 0.95f;
+    private Vector3 colliderOffset = new Vector3(0.42f, 0f);
+
+    //Health
+    public int maxHealth = 5;
+    int currentHealth;
+    bool isInvincible;
+    float timeInvincible = 2.0f;
+    float invincibleTimer;
+    Vector2 hitEffectPosition;
+    public ParticleSystem hitEffect;
+    public AudioClip hitClip;
+    public Transform respawnPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +53,11 @@ public class PlayerController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         groundLayer = LayerMask.GetMask("Ground");
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -65,18 +80,26 @@ public class PlayerController : MonoBehaviour
             doubleJumpUsed = false;
             animator.SetBool("doubleJump", doubleJumpUsed);
             //Debug.Log("Ready to Double Jump? " + doubleJumpUsed);
-        } else if (Input.GetButtonDown("Jump") && !isGrounded && !doubleJumpUsed)
+        }
+        else if (Input.GetButtonDown("Jump") && !isGrounded && !doubleJumpUsed)
         {
             doubleJumpUsed = true;
             DoubleJump();
         }
 
-            animator.SetBool("onGround", isGrounded);
+        animator.SetBool("onGround", isGrounded);
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         direction = new Vector2(horizontalInput, verticalInput);
+
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+                isInvincible = false;
+        }
     }
     void FixedUpdate()
     {
@@ -85,7 +108,7 @@ public class PlayerController : MonoBehaviour
         if (jumpTimer > Time.time && isGrounded)
         {
             Jump();
-        } 
+        }
 
         ModifyPhysics();
     }
@@ -110,7 +133,7 @@ public class PlayerController : MonoBehaviour
         rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         rigidbody2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         jumpTimer = 0;
-        
+
         StartCoroutine(JumpSqueeze(0.5f, 1.2f, 0.1f));
     }
 
@@ -193,5 +216,41 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position + colliderOffset, transform.position + colliderOffset + Vector3.down * groundLength);
         Gizmos.DrawLine(transform.position - colliderOffset, transform.position - colliderOffset + Vector3.down * groundLength);
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        if (amount < 0)
+        {
+            if (isInvincible)
+                return;
+
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+
+            animator.SetTrigger("hit");
+            //hitEffectPosition = rigidbody2d.position;
+            //Instantiate(hitEffect, hitEffectPosition, Quaternion.identity);
+            //PlaySound(hitClip);
+        }
+
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth); //Clamping ensures that the first parameter (here currentHealth + amount) never goes lower than the second parameter (here 0) and never goes above the third parameter (maxHealth). So Player’s health will always stay between 0 and maxHealth.
+
+        if (currentHealth == 0)
+            Respawn();
+
+        Debug.Log(currentHealth + "/" + maxHealth);
+        UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
+    void Respawn()
+    {
+        ChangeHealth(maxHealth);
+        transform.position = respawnPosition.position;
     }
 }

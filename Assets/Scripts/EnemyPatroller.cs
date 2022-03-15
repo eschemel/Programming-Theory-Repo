@@ -59,4 +59,10 @@ public class EnemyPatroller : Enemy
         else if (direction > -0.01f)
             spriteRenderer.flipX = true;
     }
+
+    public override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        print("Child hit with collider");
+    }
 }
