@@ -102,6 +102,7 @@ public class EnemyFaller : Enemy
     public override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
-        print("Child hit with collider");
+        //print("Child hit with collider");
+        animator.SetTrigger("hit");
     }
 }
