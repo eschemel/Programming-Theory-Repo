@@ -46,7 +46,10 @@ public class PlayerController : MonoBehaviour
     Vector2 hitEffectPosition;
     public ParticleSystem hitEffect;
     public AudioClip hitClip;
-    public Transform respawnPosition;
+
+    //Respawning
+    public Vector2 startPosition;
+    public Vector2 respawnPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +62,9 @@ public class PlayerController : MonoBehaviour
         groundLayer = LayerMask.GetMask("Ground");
 
         currentHealth = maxHealth;
+        startPosition = transform.position;
+
+        UpdateRespawnPosition(startPosition);
     }
 
     // Update is called once per frame
@@ -250,9 +256,16 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(clip);
     }
 
+    public void UpdateRespawnPosition(Vector2 position)
+    {
+        respawnPosition = position;
+        Debug.Log("Respawn postion is " + respawnPosition);
+    }
+
     void Respawn()
     {
+        Debug.Log("Respawn and the Respawn postion is " + respawnPosition);
         ChangeHealth(maxHealth);
-        transform.position = respawnPosition.position;
+        transform.position = respawnPosition;
     }
 }

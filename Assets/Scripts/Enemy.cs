@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
 
     protected float speed = 3.0f;
-    protected float changeTime = 4.0f;
+    protected float changeTime = 3.0f;
     protected float timer;
     protected int direction = 1;
     protected bool facingRight = false;

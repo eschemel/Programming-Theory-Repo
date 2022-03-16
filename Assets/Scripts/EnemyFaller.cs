@@ -85,12 +85,6 @@ public class EnemyFaller : Enemy
         animator.SetBool("blink", false);
     }
 
-    public override void OnCollisionEnter2D(Collision2D collision)
-    {
-        base.OnCollisionEnter2D(collision);
-        //print("Child hit with collider");
-    }
-
     public override void EnemyMove()
     {
         rigidbody2d.MovePosition(rigidbody2d.position); // override to remain stationary
