@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour
         if (currentHealth == 0)
             Respawn();
 
-        Debug.Log(currentHealth + "/" + maxHealth);
+        //Debug.Log(currentHealth + "/" + maxHealth);
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
@@ -259,12 +259,12 @@ public class PlayerController : MonoBehaviour
     public void UpdateRespawnPosition(Vector2 position)
     {
         respawnPosition = position;
-        Debug.Log("Respawn postion is " + respawnPosition);
+        //Debug.Log("Respawn postion is " + respawnPosition);
     }
 
     void Respawn()
     {
-        Debug.Log("Respawn and the Respawn postion is " + respawnPosition);
+        //Debug.Log("Respawn and the Respawn postion is " + respawnPosition);
         ChangeHealth(maxHealth);
         transform.position = respawnPosition;
     }

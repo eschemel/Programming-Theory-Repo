@@ -40,7 +40,7 @@ public class EnemyStationary : Enemy
         flameOn = true;
         animator.SetBool("flame", true);
         m_Collider.size = flameCollider;
-        Debug.Log("Flame On!");
+        //Debug.Log("Flame On!");
 
         //wait ... seconds then end animation, bool = false, and collider back to normal
         yield return new WaitForSeconds(activeTime);
@@ -48,7 +48,7 @@ public class EnemyStationary : Enemy
         activeWait = Random.Range(5, 11);
         animator.SetBool("flame", false);
         m_Collider.size = origCollider;
-        Debug.Log("Flame Off!");
+        //Debug.Log("Flame Off!");
         yield return new WaitForSeconds(activeWait);
         flameOn = false;
     }

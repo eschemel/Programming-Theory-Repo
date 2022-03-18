@@ -11,18 +11,19 @@ public class menuManageButtons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene(1); //Main=1
+        GameManager.Instance.StartGame();
     }
 
     public void ExitGame()
@@ -32,10 +33,5 @@ public class menuManageButtons : MonoBehaviour
 #else
             Application.Quit(); // original code to quit Unity player
 #endif
-    }
-
-    public void GameSettings()
-    {
-        //Add code to open scene to set the difficulty level and maybe change volume for music
     }
 }
