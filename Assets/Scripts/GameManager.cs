@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
         startScreen.SetActive(true);
 
-        settingsScreen.SetActive(false);
+        //settingsScreen.SetActive(false);
         //Not Paused
         paused = false;
         pauseScreen.SetActive(false);
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         pauseScreen.SetActive(false);
-        settingsScreen.SetActive(false);
+        //settingsScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameSettings()
+    /*public void GameSettings()
     {
         settingsScreen.SetActive(true);
         if(!isGameActive)
@@ -107,9 +107,9 @@ public class GameManager : MonoBehaviour
         {
             pauseScreen.SetActive(false);
         }
-    }
+    }*/
 
-    public void SettingsBacktoMenu() 
+    /*public void SettingsBacktoMenu() 
     {
         settingsScreen.SetActive(false);
         if (!isGameActive)
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         {
             pauseScreen.SetActive(true);
         }
-    }
+    }*/
 
     public void QuitToMenu()
     {
