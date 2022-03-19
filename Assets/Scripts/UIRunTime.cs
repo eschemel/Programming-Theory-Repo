@@ -8,9 +8,9 @@ public class UIRunTime : MonoBehaviour
     public TextMeshProUGUI timerText;
     
     public float timer = 0;
-    string timeText;
+    private string timeText;
 
-    void Update()
+    private void Update()
     {
         if (GameManager.Instance != null)
         {
@@ -19,11 +19,14 @@ public class UIRunTime : MonoBehaviour
                 timer += Time.deltaTime;
 
                 DisplayTime(timer);
+            } else
+            {
+                GameManager.Instance.m_bestTime = timer;
             }
         }
     }
 
-    void DisplayTime(float timeToDisplay)
+    private void DisplayTime(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);

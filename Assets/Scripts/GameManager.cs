@@ -3,31 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO; //required for JsonUtility
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public GameObject pauseScreen;
-    public GameObject settingsScreen;
     public GameObject startScreen;
+    public GameObject gameOverPanel;
 
     public bool isGameActive { get; set; }
     public bool paused = false;
+
+    [Header("Save Data")]
+    public string m_playerName;
+    public float m_bestTime;
+    private bool _reset = false;
+
+    [Header("Current Game")]
+    public string m_cPlayerName; //Hidden until high score.
+    public float m_cBestTime; //current game time
 
     //Allows access to the GameManager GameObject between scenes
     private void Awake()
     {
         GameManagerInstance();
 
-        startScreen.SetActive(true);
+        startScreen.gameObject.SetActive(true);
 
-        //settingsScreen.SetActive(false);
         //Not Paused
         paused = false;
-        pauseScreen.SetActive(false);
+
+        gameOverPanel.gameObject.SetActive(false);
     }
 
-    void GameManagerInstance()
+    private void GameManagerInstance()
     {
         //Ensure only a single instance exists
         if (Instance != null)
@@ -41,17 +50,16 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        pauseScreen.SetActive(false);
-        //settingsScreen.SetActive(false);
+
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // Pause - Check if the user has pressed the P key
-        if (Input.GetKeyDown(KeyCode.P) && isGameActive)
+        // Pause - Check if the user has pressed the Esc key
+        if (Input.GetKeyDown(KeyCode.Escape) && isGameActive)
         {
             PauseGame();
         }
@@ -62,21 +70,31 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
         Time.timeScale = 1;
         AudioListener.pause = false;
+        startScreen.gameObject.SetActive(false);
     }
 
     // Stop game, bring up game over text and restart button
     public void GameOver()
     {
-        //gameOverText.gameObject.SetActive(true);
-        //restartButton.gameObject.SetActive(true);
-
+        //Time.timeScale = 0;
         isGameActive = false;
+        HighScore();
+        StartCoroutine("FadeToGameOver");
+    }
+
+    private IEnumerator FadeToGameOver()
+    {
+        yield return new WaitForSeconds(3);
+        gameOverPanel.gameObject.SetActive(true);
     }
 
     // Restart game by reloading the scene
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1); //Main=1
+        paused = false;
+        Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 
     public void PauseGame()
@@ -84,49 +102,84 @@ public class GameManager : MonoBehaviour
         if (!paused)
         {
             paused = true;
-            pauseScreen.SetActive(true);
             Time.timeScale = 0;
             AudioListener.pause = true;
+            SceneManager.LoadSceneAsync("UIPause", LoadSceneMode.Additive);
+
         }
         else
         {
+            SceneManager.UnloadSceneAsync("UIPause");
             paused = false;
-            pauseScreen.SetActive(false);
             Time.timeScale = 1;
             AudioListener.pause = false;
         }
     }
-
-    /*public void GameSettings()
-    {
-        settingsScreen.SetActive(true);
-        if(!isGameActive)
-        {
-            startScreen.SetActive(false);
-        } else if (paused)
-        {
-            pauseScreen.SetActive(false);
-        }
-    }*/
-
-    /*public void SettingsBacktoMenu() 
-    {
-        settingsScreen.SetActive(false);
-        if (!isGameActive)
-        {
-            startScreen.SetActive(true);
-        }
-        else if (paused)
-        {
-            pauseScreen.SetActive(true);
-        }
-    }*/
 
     public void QuitToMenu()
     {
         isGameActive = false;
         paused = false;
         SceneManager.LoadScene(0); //Menu=0
-        pauseScreen.SetActive(false);
+        AudioListener.pause = false;
+    }
+
+    private void HighScore()
+    {
+        if (!_reset)
+        {
+            //current game - if new best time
+            if (m_cBestTime > m_bestTime)
+            {
+                m_bestTime = m_cBestTime;
+                m_playerName = m_cPlayerName;
+                //bestScoreText.text = "High Score : " + m_playerName + " : " + m_HighPoints;
+
+                SaveBestTime();
+            }
+        }
+        else
+        {
+            m_cBestTime = 0f;
+            m_playerName = m_cPlayerName;
+            //bestScoreText.text = "High Score : " + m_playerName + " : " + m_HighPoints;
+
+            SaveBestTime();
+        }
+    }
+
+    ////////////SAVE DATA////////////
+    [System.Serializable] //required for JsonUtility
+    class SaveData
+    {
+        public string m_playerName;
+        public float m_bestTime;
+    }
+
+    //Saving to Json
+    public void SaveBestTime()
+    {
+        SaveData data = new SaveData();
+
+        data.m_playerName = m_playerName;
+        data.m_bestTime = m_bestTime;
+
+        string json = JsonUtility.ToJson(data);
+
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+    }
+
+    //Loading from Json
+    public void LoadBestTime()
+    {
+        string path = Application.persistentDataPath + "/savefile.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+            m_playerName = data.m_playerName;
+            m_bestTime = data.m_bestTime;
+        }
     }
 }

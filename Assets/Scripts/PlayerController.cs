@@ -16,14 +16,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction;
     private float horizontalInput;
     private float verticalInput;
-    bool facingRight = false;
+    private bool facingRight = false;
 
     [Header("Vertical Movement")]
-    private float jumpForce = 19f;
+    private float jumpForce = 17f;
     private float jumpDelay = 0.25f;
     private float jumpTimer;
     private bool doubleJumpUsed = false;
-    private float doubleJumpForce = 10;
+    private float doubleJumpForce = 7f;
 
     [Header("Physics")]
     private float maxSpeed = 15f;
@@ -38,12 +38,12 @@ public class PlayerController : MonoBehaviour
 
     //Health
     public int maxHealth = 5;
-    int currentHealth;
+    private int currentHealth;
     public int health { get { return currentHealth; } } //Property, get = read-only to other scripts / set = writable not readable to other scripts
-    bool isInvincible;
-    float timeInvincible = 2.0f;
-    float invincibleTimer;
-    Vector2 hitEffectPosition;
+    private bool isInvincible;
+    private float timeInvincible = 2.0f;
+    private float invincibleTimer;
+    private Vector2 hitEffectPosition;
     public ParticleSystem hitEffect;
     public AudioClip hitClip;
 
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 respawnPosition;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         bool wasOnGround = isGrounded;
 
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
                 isInvincible = false;
         }
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         MoveCharacter(direction.x);
 
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         ModifyPhysics();
     }
 
-    void MoveCharacter(float horizontal)
+    private void MoveCharacter(float horizontal)
     {
         rigidbody2d.AddForce(Vector2.right * horizontal * speed);
 
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("vertical", rigidbody2d.velocity.y);
     }
 
-    void Jump()
+    private void Jump()
     {
         rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         rigidbody2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -144,15 +144,14 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(JumpSqueeze(0.5f, 1.2f, 0.1f));
     }
 
-    void DoubleJump()
+    private void DoubleJump()
     {
         //Debug.Log("doubleJumpUsed: " + doubleJumpUsed);
-        //rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         rigidbody2d.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
         animator.SetBool("doubleJump", doubleJumpUsed);
     }
 
-    void ModifyPhysics()
+    private void ModifyPhysics()
     {
         bool isChangingDirection = (direction.x > 0 && rigidbody2d.velocity.x < 0) || (direction.x < 0 && rigidbody2d.velocity.x > 0);
 
@@ -184,7 +183,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Flip()
+    private void Flip()
     {
         // Switch the way the player is labelled as facing
         facingRight = !facingRight;
@@ -196,7 +195,7 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = true;
     }
 
-    IEnumerator JumpSqueeze(float xSqueeze, float ySqueeze, float seconds)
+    private IEnumerator JumpSqueeze(float xSqueeze, float ySqueeze, float seconds)
     {
         Vector3 originalSize = Vector3.one;
         Vector3 newSize = new Vector3(xSqueeze, ySqueeze, originalSize.z);
@@ -262,7 +261,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Respawn postion is " + respawnPosition);
     }
 
-    void Respawn()
+    private void Respawn()
     {
         //Debug.Log("Respawn and the Respawn postion is " + respawnPosition);
         ChangeHealth(maxHealth);

@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class HealthCollectible : MonoBehaviour
 {
-    //public ParticleSystem sparkleEffect;
+    public ParticleSystem sparkleEffect;
     //public AudioClip collectedClip;
 
-    Vector2 particlePosition;
+    private Vector2 particlePosition;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void Start()
+    {
+        particlePosition = gameObject.transform.position;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
@@ -17,10 +22,9 @@ public class HealthCollectible : MonoBehaviour
         {
             if (player.health < player.maxHealth)
             {
-                particlePosition = gameObject.transform.position;
                 player.ChangeHealth(1);
                 Destroy(gameObject);
-                //Instantiate(sparkleEffect, particlePosition, Quaternion.identity);
+                Instantiate(sparkleEffect, particlePosition, Quaternion.identity);
                 //player.PlaySound(collectedClip);
             }
         }

@@ -9,20 +9,15 @@ public class SettingsController : MonoBehaviour
     public AudioClip[] soundtrack;
     public Slider volumeSlider;
 
-    AudioSource audioSource;
+    private AudioSource audioSource;
 
     public void BackButton()
     {
         SceneManager.UnloadSceneAsync("UISettings");
     }
 
-    /*void Awake()
-    {
-        DontDestroyOnLoad(transform.gameObject);
-    }*/
-
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         audioSource = GameManager.Instance.GetComponent<AudioSource>();
 
@@ -31,10 +26,12 @@ public class SettingsController : MonoBehaviour
             audioSource.clip = soundtrack[Random.Range(0, soundtrack.Length)];
             audioSource.Play();
         }
+
+        volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!audioSource.isPlaying)
         {
@@ -43,19 +40,20 @@ public class SettingsController : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         //Register Slider Events
         volumeSlider.onValueChanged.AddListener(delegate { changeVolume(volumeSlider.value); });
     }
 
     //Called when Slider is moved
-    void changeVolume(float sliderValue)
+    private void changeVolume(float sliderValue)
     {
         audioSource.volume = sliderValue;
+        PlayerPrefs.SetFloat("MusicVolume", sliderValue);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         //Un-Register Slider Events
         volumeSlider.onValueChanged.RemoveAllListeners();

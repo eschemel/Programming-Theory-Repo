@@ -8,13 +8,15 @@ public class UIHealthBar : MonoBehaviour
     public static UIHealthBar instance { get; private set; }
 
     public Image mask;
-    float originalSize;
+    
+    private float originalSize;
 
-    void Awake()
+    private void Awake()
     {
         instance = this; // this, is a special C# keyword that means “the object that currently runs that function” (Singleton)
     }
-    void Start()
+
+    private void Start()
     {
         originalSize = mask.rectTransform.rect.width;
     }

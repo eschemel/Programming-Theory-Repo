@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class EnemyStationary : Enemy
 {
-    BoxCollider2D m_Collider;
+    private BoxCollider2D m_Collider;
 
-    Vector2 origCollider;
-    Vector2 flameCollider;
+    private Vector2 origCollider;
+    private Vector2 flameCollider;
 
-    bool flameOn;
+    private bool flameOn;
 
-    float activeTime;
-    float activeWait;
+    private float activeTime;
+    private float activeWait;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         m_Collider = GetComponent<BoxCollider2D>();
         origCollider = new Vector2(m_Collider.size.x, m_Collider.size.y);
@@ -25,7 +25,7 @@ public class EnemyStationary : Enemy
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (flameOn != true)
         {
@@ -33,7 +33,7 @@ public class EnemyStationary : Enemy
         }
     }
 
-    IEnumerator TrapOn()
+    private IEnumerator TrapOn()
     {
         activeTime = Random.Range(2, 6);
         //animator trigger PLUS increase box collider
@@ -64,6 +64,6 @@ public class EnemyStationary : Enemy
 
     public override void EnemyMove()
     {
-        rigidbody2d.MovePosition(rigidbody2d.position); // override to remain stationary
+        // override to remain stationary
     }
 }

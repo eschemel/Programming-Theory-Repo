@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class UpdateCheckPoint : MonoBehaviour
 {
+    private BoxCollider2D m_Collider;
+    private Animator animator;
 
-    Rigidbody2D rigidbody2d;
-    BoxCollider2D m_Collider;
-    Animator animator;
-    Vector2 checkPointPosition;
+    private Vector2 checkPointPosition;
 
     private void Start()
     {
-        rigidbody2d = GetComponent<Rigidbody2D>();
+        
         animator = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
         checkPointPosition = transform.position;

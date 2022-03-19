@@ -5,20 +5,18 @@ using UnityEngine;
 public class EnemyFaller : Enemy
 {
     private float gravity = 0f;
-    //float speed = 30f;
-    //int direction = 1;
-    float blinkTimer = 0f;
-    int dropSpeed;
-    int dropDirection;
+    private float blinkTimer = 0f;
+    private int dropSpeed;
+    private int dropDirection;
 
-    Vector2 originPosition;
-    Vector2 positionA;
+    private Vector2 originPosition;
+    private Vector2 positionA;
 
-    Vector2 crushPosition;
-    Vector2 positionB;
+    private Vector2 crushPosition;
+    private Vector2 positionB;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rigidbody2d.gravityScale = gravity;
 
@@ -28,7 +26,7 @@ public class EnemyFaller : Enemy
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Blink animation
         blinkTimer += Time.deltaTime;
@@ -44,7 +42,7 @@ public class EnemyFaller : Enemy
 
         if (player != null)
         {
-            Debug.Log("Child trigger Enter");
+            //Debug.Log("Child trigger Enter");
             dropSpeed = 5;
             dropDirection = 1;
             positionA = originPosition;
@@ -56,7 +54,7 @@ public class EnemyFaller : Enemy
         }
     }
 
-    IEnumerator ResetEnemy()
+    private IEnumerator ResetEnemy()
     {
         yield return new WaitForSeconds(5);
         dropSpeed = 15;
@@ -77,7 +75,7 @@ public class EnemyFaller : Enemy
     }
 
     //Blink animation
-    IEnumerator Blink()
+    private IEnumerator Blink()
     {
         animator.SetBool("blink", true);
         blinkTimer = 0;
@@ -87,6 +85,6 @@ public class EnemyFaller : Enemy
 
     public override void EnemyMove()
     {
-        rigidbody2d.MovePosition(rigidbody2d.position); // override to remain stationary
+        // override to remain stationary
     }
 }

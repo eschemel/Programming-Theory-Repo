@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CheckPointEndGame : MonoBehaviour
 {
-    //Rigidbody2D rigidbody2d;
-    Animator animator;
+    public ParticleSystem endEffect;
+    private Animator animator;
+
+    public CinemachineSwitcher cameraSwitch;
 
     private void Start()
     {
-        //rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
@@ -19,8 +20,14 @@ public class CheckPointEndGame : MonoBehaviour
 
         if (player != null)
         {
-            GameManager.Instance.GameOver();
+            if(GameManager.Instance != null)
+            {
+                GameManager.Instance.GameOver();
+            }
+
+            cameraSwitch.SwitchState();
             animator.SetTrigger("endHit");
+            endEffect.gameObject.SetActive(true);
         }
     }
 }

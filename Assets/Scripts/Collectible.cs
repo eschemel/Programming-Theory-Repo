@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    Rigidbody2D rigidbody2d;
-    Animator animator;
+    private Rigidbody2D rigidbody2d;
+    private Animator animator;
+    
     public GameObject powerUp;
     public GameObject usedBlock;
-    Vector2 originPosition;
-    
+
+    private Vector2 originPosition;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -19,13 +21,7 @@ public class Collectible : MonoBehaviour
         originPosition = rigidbody2d.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+   private void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 

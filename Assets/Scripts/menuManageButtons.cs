@@ -8,36 +8,6 @@ using UnityEditor;
 
 public class menuManageButtons : MonoBehaviour
 {
-    public GameObject settingsScreen;
-    public GameObject startScreen;
-
-    private static menuManageButtons instance;
-    void Awake()
-    {
-        /*if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }*/
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //startScreen = GameObject.Find("Container");
-        //settingsScreen = GameObject.Find("SettingsPanel");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void StartGame()
     {
         SceneManager.LoadScene(1); //Main=1
@@ -56,6 +26,5 @@ public class menuManageButtons : MonoBehaviour
     public void GameSettings()
     {
         SceneManager.LoadSceneAsync("UISettings", LoadSceneMode.Additive);
-        //startScreen.SetActive(false);
     }
 }

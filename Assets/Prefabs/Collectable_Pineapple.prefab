@@ -122,3 +122,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e033649ca1179f459811390309264ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sparkleEffect: {fileID: 4553494389281848480, guid: a6a476484e3940746a1c4686122422bd, type: 3}
