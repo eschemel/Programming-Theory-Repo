@@ -37,14 +37,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 colliderOffset = new Vector3(0.42f, 0f);
 
     //Health
-    public int maxHealth = 5;
+    public int maxHealth { get; private set; }
     private int currentHealth;
     public int health { get { return currentHealth; } } //Property, get = read-only to other scripts / set = writable not readable to other scripts
     private bool isInvincible;
     private float timeInvincible = 2.0f;
     private float invincibleTimer;
-    private Vector2 hitEffectPosition;
-    public ParticleSystem hitEffect;
+    //private Vector2 hitEffectPosition;
+    //public ParticleSystem hitEffect;
     public AudioClip hitClip;
 
     //Respawning
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
         groundLayer = LayerMask.GetMask("Ground");
 
+        maxHealth = 3;
         currentHealth = maxHealth;
         startPosition = transform.position;
 

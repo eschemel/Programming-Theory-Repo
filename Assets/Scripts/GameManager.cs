@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     // Stop game, bring up game over text and restart button
     public void GameOver()
     {
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
         isGameActive = false;
         HighScore();
         StartCoroutine("FadeToGameOver");
@@ -84,7 +84,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator FadeToGameOver()
     {
-        yield return new WaitForSeconds(3);
+        //wait continues ignoring Time.timeScale = 0
+        yield return new WaitForSecondsRealtime(3);
         gameOverPanel.gameObject.SetActive(true);
     }
 

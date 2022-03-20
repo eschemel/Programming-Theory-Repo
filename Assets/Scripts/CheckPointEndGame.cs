@@ -23,6 +23,9 @@ public class CheckPointEndGame : MonoBehaviour
             if(GameManager.Instance != null)
             {
                 GameManager.Instance.GameOver();
+            } else
+            {
+                Debug.Log("Game Manager is null but Game Over achieved");
             }
 
             cameraSwitch.SwitchState();
