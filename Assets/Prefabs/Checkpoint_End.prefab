@@ -99,7 +99,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: d0bbb8aa268911d46964aa9c569ea98a, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endEffect: {fileID: 9167943663662066422}
+  cameraSwitch: {fileID: 0}
 --- !u!1001 &4614596656405288534
 PrefabInstance:
   m_ObjectHideFlags: 0

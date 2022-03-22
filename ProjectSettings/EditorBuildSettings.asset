@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UIPause.unity
     guid: c9abb06e60a9a2046b50aedca07181d1
+  - enabled: 1
+    path: Assets/Scenes/UIGameOver.unity
+    guid: ff6a58ccfd3b22244a41feffeae7ef11
   m_configObjects: {}

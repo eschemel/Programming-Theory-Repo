@@ -12,6 +12,7 @@ public class CheckPointEndGame : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        animator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

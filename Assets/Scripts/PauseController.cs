@@ -20,7 +20,7 @@ public class PauseController : MonoBehaviour
     //Quit to Main Menu
     public void QuitToMainMenu()
     {
-        GameManager.Instance.QuitToMenu();
+        GameManager.Instance.PauseQuitToMenu();
     }
 
     //Close Pause window / Resume game

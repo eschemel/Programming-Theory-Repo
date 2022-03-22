@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3001133244734645790}
-  - component: {fileID: 3001133244734645791}
   - component: {fileID: 3001133244734645789}
+  - component: {fileID: 3001133244734645791}
+  - component: {fileID: 3997668226302685580}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -32,25 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3001133244734645791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001133244734645776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92a9300bf58cb64ba588e6ce6c6c2ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startScreen: {fileID: 0}
-  gameOverPanel: {fileID: 0}
-  paused: 0
-  m_playerName: 
-  m_bestTime: 0
-  m_cPlayerName: 
-  m_cBestTime: 0
 --- !u!82 &3001133244734645789
 AudioSource:
   m_ObjectHideFlags: 0
@@ -147,3 +129,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3001133244734645791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001133244734645776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d92a9300bf58cb64ba588e6ce6c6c2ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startScreen: {fileID: 0}
+  gameOverPanel: {fileID: 0}
+  paused: 0
+--- !u!114 &3997668226302685580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3001133244734645776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 743f053dbeb641241b5fbee62fd340f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bestScoreText: {fileID: 0}
+  m_playerName: 
+  m_bestTime: 0
+  m_cPlayerName: 
+  m_cBestTime: 0

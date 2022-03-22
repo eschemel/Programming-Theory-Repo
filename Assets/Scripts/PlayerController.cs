@@ -111,8 +111,11 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        MoveCharacter(direction.x);
-
+        if(GameManager.Instance.isGameActive)
+        {
+            MoveCharacter(direction.x);
+        }
+        
         if (jumpTimer > Time.time && isGrounded)
         {
             Jump();

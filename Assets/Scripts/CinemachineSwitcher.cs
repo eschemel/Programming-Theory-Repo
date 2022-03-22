@@ -17,6 +17,7 @@ public class CinemachineSwitcher : MonoBehaviour
     {
         if(playerFollowCamera)
         {
+            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             animator.Play("EndCamera");
         }
     }
