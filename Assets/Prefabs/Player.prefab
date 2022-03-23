@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8510531323955054531}
   - component: {fileID: 8510531323955054530}
   - component: {fileID: 8510531323955054534}
-  - component: {fileID: 8510531323955054529}
   - component: {fileID: 8510531323955054535}
+  - component: {fileID: 7605275841913211250}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -126,32 +126,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &8510531323955054529
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8510531323955054589}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.03999999, y: -0.1437115}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.87, y: 1.5125769}
-  m_EdgeRadius: 0
 --- !u!114 &8510531323955054535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,20 +138,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de1b63f048efd2341b2e97f6fe4f0125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody2d: {fileID: 0}
-  animator: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  speed: 15
-  direction: {x: 0, y: 0}
-  jumpForce: 19
-  jumpDelay: 0.25
-  maxSpeed: 15
-  linearDrag: 4
-  gravity: 1
-  fallMultiplier: 5
-  isGrounded: 1
-  groundLength: 0.95
-  colliderOffset: {x: 0.42, y: 0, z: 0}
+  hitClip: {fileID: 0}
+  startPosition: {x: 0, y: 0}
+  respawnPosition: {x: 0, y: 0}
+--- !u!70 &7605275841913211250
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8510531323955054589}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 1240970b576cb9945b8f19841131b0c7, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.004432678, y: -0.13066411}
+  m_Size: {x: 0.9629898, y: 1.5522637}
+  m_Direction: 0

@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Physics")]
     private float maxSpeed = 15f;
-    private float linearDrag = 4f;
+    private float linearDrag = 6f;
     private float gravity = 1f;
     private float fallMultiplier = 5f;
 
