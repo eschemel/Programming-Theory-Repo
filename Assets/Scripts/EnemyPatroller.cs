@@ -25,6 +25,7 @@ public class EnemyPatroller : Enemy
 
     private void FixedUpdate()
     {
+        // INHERITANCE
         EnemyMove();
     }
 }

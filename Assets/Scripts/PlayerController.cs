@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     //Health
     public int maxHealth { get; private set; }
     private int currentHealth;
+    // ENCAPSULATION
     public int health { get { return currentHealth; } } //Property, get = read-only to other scripts / set = writable not readable to other scripts
     private bool isInvincible;
     private float timeInvincible = 2.0f;
@@ -155,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
     private void MoveCharacter(float horizontal)
     {
+        // ABSTRACTION
         rigidbody2d.AddForce(Vector2.right * horizontal * speed);
 
         Flip();
@@ -170,6 +172,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        // ABSTRACTION
         rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         rigidbody2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         PlaySound(jumpSound, 1.0f);
@@ -180,6 +183,7 @@ public class PlayerController : MonoBehaviour
 
     private void DoubleJump()
     {
+        // ABSTRACTION
         //Debug.Log("doubleJumpUsed: " + doubleJumpUsed);
         rigidbody2d.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
         animator.SetBool("doubleJump", doubleJumpUsed);
@@ -188,6 +192,7 @@ public class PlayerController : MonoBehaviour
 
     private void ModifyPhysics()
     {
+        // ABSTRACTION
         bool isChangingDirection = (direction.x > 0 && rigidbody2d.velocity.x < 0) || (direction.x < 0 && rigidbody2d.velocity.x > 0);
 
         if (isGrounded)
@@ -220,6 +225,7 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
+        // ABSTRACTION
         // Switch the way the player is labelled as facing
         facingRight = !facingRight;
 
@@ -261,6 +267,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
+        // ABSTRACTION
         if (amount < 0)
         {
             if (isInvincible)
@@ -285,17 +292,20 @@ public class PlayerController : MonoBehaviour
 
     public void PlaySound(AudioClip clip, float volumeScale)
     {
+        // ABSTRACTION
         audioSource.PlayOneShot(clip, volumeScale);
     }
 
     public void UpdateRespawnPosition(Vector2 position)
     {
+        // ABSTRACTION
         respawnPosition = position;
         //Debug.Log("Respawn postion is " + respawnPosition);
     }
 
     private void Respawn()
     {
+        // ABSTRACTION
         //Debug.Log("Respawn and the Respawn postion is " + respawnPosition);
         ChangeHealth(maxHealth);
         transform.position = respawnPosition;

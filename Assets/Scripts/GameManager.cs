@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    // ENCAPSULATION
     public bool isGameActive { get; set; }
     public bool paused = false;
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void GameManagerInstance()
     {
+        // ABSTRACTION
         //Ensure only a single instance exists
         if (Instance != null)
         {
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
+        // ABSTRACTION
         if (!paused)
         {
             paused = true;

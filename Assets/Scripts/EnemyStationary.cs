@@ -57,6 +57,7 @@ public class EnemyStationary : Enemy
     {
         if (flameOn != false)
         {
+            // INHERITANCE
             base.OnCollisionEnter2D(collision);
             //print("Child hit with collider");
         }
@@ -64,6 +65,7 @@ public class EnemyStationary : Enemy
 
     public override void EnemyMove()
     {
+        // POLYMORPHISM
         // override to remain stationary
     }
 }
