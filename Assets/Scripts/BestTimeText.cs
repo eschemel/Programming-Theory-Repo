@@ -18,7 +18,7 @@ public class BestTimeText : MonoBehaviour
 
     }
 
-    public string DisplayTime(float timeToDisplay)
+    private string DisplayTime(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);

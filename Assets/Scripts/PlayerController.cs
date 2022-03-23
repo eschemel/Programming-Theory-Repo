@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip hitClip;
 
     //Respawning
-    public Vector2 startPosition;
-    public Vector2 respawnPosition;
+    private Vector2 startPosition;
+    private Vector2 respawnPosition;
 
     // Start is called before the first frame update
     private void Start()
