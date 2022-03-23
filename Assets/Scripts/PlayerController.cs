@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTimer;
     private bool doubleJumpUsed = false;
     private float doubleJumpForce = 7f;
+    public AudioClip jumpSound;
 
     [Header("Physics")]
     private float maxSpeed = 15f;
@@ -80,19 +81,42 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(JumpSqueeze(1.25f, 0.8f, 0.05f));
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded) //GetButtonDown("Jump") = Spacebar
+        if (GameManager.Instance != null)
         {
-            jumpTimer = Time.time + jumpDelay;
-            //Debug.Log(jumpTimer);
+            if (GameManager.Instance.isGameActive)
+            {
+                if (Input.GetButtonDown("Jump") && isGrounded) //GetButtonDown("Jump") = Spacebar
+                {
+                    jumpTimer = Time.time + jumpDelay;
+                    //Debug.Log(jumpTimer);
 
-            doubleJumpUsed = false;
-            animator.SetBool("doubleJump", doubleJumpUsed);
-            //Debug.Log("Ready to Double Jump? " + doubleJumpUsed);
+                    doubleJumpUsed = false;
+                    animator.SetBool("doubleJump", doubleJumpUsed);
+                    //Debug.Log("Ready to Double Jump? " + doubleJumpUsed);
+                }
+                else if (Input.GetButtonDown("Jump") && !isGrounded && !doubleJumpUsed)
+                {
+                    doubleJumpUsed = true;
+                    DoubleJump();
+                }
+            }
         }
-        else if (Input.GetButtonDown("Jump") && !isGrounded && !doubleJumpUsed)
+        else
         {
-            doubleJumpUsed = true;
-            DoubleJump();
+            if (Input.GetButtonDown("Jump") && isGrounded) //GetButtonDown("Jump") = Spacebar
+            {
+                jumpTimer = Time.time + jumpDelay;
+                //Debug.Log(jumpTimer);
+
+                doubleJumpUsed = false;
+                animator.SetBool("doubleJump", doubleJumpUsed);
+                //Debug.Log("Ready to Double Jump? " + doubleJumpUsed);
+            }
+            else if (Input.GetButtonDown("Jump") && !isGrounded && !doubleJumpUsed)
+            {
+                doubleJumpUsed = true;
+                DoubleJump();
+            }
         }
 
         animator.SetBool("onGround", isGrounded);
@@ -111,11 +135,18 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(GameManager.Instance.isGameActive)
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance.isGameActive)
+            {
+                MoveCharacter(direction.x);
+            }
+        }
+        else
         {
             MoveCharacter(direction.x);
         }
-        
+
         if (jumpTimer > Time.time && isGrounded)
         {
             Jump();
@@ -143,6 +174,7 @@ public class PlayerController : MonoBehaviour
     {
         rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         rigidbody2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        PlaySound(jumpSound, 1.0f);
         jumpTimer = 0;
 
         StartCoroutine(JumpSqueeze(0.5f, 1.2f, 0.1f));
@@ -153,6 +185,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("doubleJumpUsed: " + doubleJumpUsed);
         rigidbody2d.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
         animator.SetBool("doubleJump", doubleJumpUsed);
+        PlaySound(jumpSound, 1.0f);
     }
 
     private void ModifyPhysics()
@@ -239,10 +272,8 @@ public class PlayerController : MonoBehaviour
             invincibleTimer = timeInvincible;
 
             animator.SetTrigger("hit");
+            PlaySound(hitClip, 1.0f);
             rigidbody2d.AddForce(Vector2.left * 100, ForceMode2D.Impulse);
-            //hitEffectPosition = rigidbody2d.position;
-            //Instantiate(hitEffect, hitEffectPosition, Quaternion.identity);
-            //PlaySound(hitClip);
         }
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth); //Clamping ensures that the first parameter (here currentHealth + amount) never goes lower than the second parameter (here 0) and never goes above the third parameter (maxHealth). So Player’s health will always stay between 0 and maxHealth.
@@ -254,9 +285,9 @@ public class PlayerController : MonoBehaviour
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
-    public void PlaySound(AudioClip clip)
+    public void PlaySound(AudioClip clip, float volumeScale)
     {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clip, volumeScale);
     }
 
     public void UpdateRespawnPosition(Vector2 position)

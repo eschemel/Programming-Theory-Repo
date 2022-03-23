@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sparkleEffect: {fileID: 4553494389281848480, guid: a6a476484e3940746a1c4686122422bd, type: 3}
+  pickupClip: {fileID: 8300000, guid: 0eb3dae141e68d04a952a0c11eb44bbf, type: 3}

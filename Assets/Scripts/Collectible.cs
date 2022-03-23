@@ -9,6 +9,7 @@ public class Collectible : MonoBehaviour
     
     public GameObject powerUp;
     public GameObject usedBlock;
+    
 
     private Vector2 originPosition;
 

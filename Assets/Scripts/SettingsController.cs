@@ -27,7 +27,7 @@ public class SettingsController : MonoBehaviour
             audioSource.Play();
         }
 
-        volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
+        volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
     }
 
     // Update is called once per frame

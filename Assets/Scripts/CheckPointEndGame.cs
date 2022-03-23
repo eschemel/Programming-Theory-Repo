@@ -6,6 +6,7 @@ public class CheckPointEndGame : MonoBehaviour
 {
     public ParticleSystem endEffect;
     private Animator animator;
+    public AudioClip levelEnd;
 
     public CinemachineSwitcher cameraSwitch;
 
@@ -30,6 +31,7 @@ public class CheckPointEndGame : MonoBehaviour
             }
 
             cameraSwitch.SwitchState();
+            player.PlaySound(levelEnd, 1.0f);
             animator.SetTrigger("endHit");
             endEffect.gameObject.SetActive(true);
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthCollectible : MonoBehaviour
 {
     public ParticleSystem sparkleEffect;
-    //public AudioClip collectedClip;
+    public AudioClip pickupClip;
 
     private Vector2 particlePosition;
 
@@ -25,7 +25,7 @@ public class HealthCollectible : MonoBehaviour
                 player.ChangeHealth(1);
                 Destroy(gameObject);
                 Instantiate(sparkleEffect, particlePosition, Quaternion.identity);
-                //player.PlaySound(collectedClip);
+                player.PlaySound(pickupClip, 1.0f);
             }
         }
     }

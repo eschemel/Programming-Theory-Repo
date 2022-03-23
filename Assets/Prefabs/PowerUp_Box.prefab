@@ -166,3 +166,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUp: {fileID: 440820227870882274, guid: 17b3473fc7bb5b34685fa023940b140e, type: 3}
   usedBlock: {fileID: 4476862922356810951, guid: d91c73af613b356418b36d17807a8756, type: 3}
+  pickupClip: {fileID: 8300000, guid: 0eb3dae141e68d04a952a0c11eb44bbf, type: 3}
