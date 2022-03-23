@@ -44,8 +44,6 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible;
     private float timeInvincible = 2.0f;
     private float invincibleTimer;
-    //private Vector2 hitEffectPosition;
-    //public ParticleSystem hitEffect;
     public AudioClip hitClip;
 
     //Respawning

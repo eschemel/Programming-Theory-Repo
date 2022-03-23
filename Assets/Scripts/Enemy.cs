@@ -28,10 +28,13 @@ public class Enemy : MonoBehaviour
 
         if (player != null)
         {
-            player.ChangeHealth(-1);
-            if (animator != null)
+            if(collision.gameObject.name != "Stomper")
             {
-                animator.SetTrigger("hit");
+                player.ChangeHealth(-1);
+                if (animator != null)
+                {
+                    animator.SetTrigger("hit");
+                }
             }
         }
     }
